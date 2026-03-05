@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ayurveda for Beginners | Vande Wellness</title>
+<meta name="description" content="Ayurveda for Beginners online reader by Vande Wellness." />
+
+<style>
+:root{
+  --bg:#fbfbf8;
+  --card:#ffffff;
+  --text:#142015;
+  --muted:#4b5a4d;
+  --border:#e6e6e0;
+  --brand:#0f4a3a;
+  --brand2:#b18a2b;
+  --rail:#e9ece6;
+  --maxw:1120px;
+  --radius:16px;
+  --bodySize:18px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  line-height:1.75;
+}
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:999;
+  background:rgba(251,251,248,0.95);
+  border-bottom:1px solid var(--border);
+}
+.topbar-inner{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.backLink{
+  text-decoration:none;
+  color:var(--brand);
+  font-weight:700;
+  font-size:13px;
+  border:1px solid rgba(15,74,58,0.22);
+  background:rgba(15,74,58,0.06);
+  padding:8px 10px;
+  border-radius:12px;
+  white-space:nowrap;
+}
+.progress-rail{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 16px 12px;
+}
+.progress{
+  height:6px;
+  width:100%;
+  background:var(--rail);
+  border-radius:999px;
+  overflow:hidden;
+}
+.progress > div{
+  height:6px;
+  width:0%;
+  background:linear-gradient(90deg,var(--brand),var(--brand2));
+}
+.wrap{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:20px 16px 40px;
+}
+.hero{
+  display:grid;
+  grid-template-columns:360px 1fr;
+  gap:20px;
+  margin-bottom:18px;
+}
+.cover{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#fff;
+  min-height:420px;
+}
+.cover img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+.heroCard{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--card);
+  padding:20px;
+}
+.heroCard h1{
+  margin:0;
+  font-size:34px;
+  line-height:1.2;
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--brand);
+}
+.heroCard p{
+  margin:10px 0 0;
+  color:var(--muted);
+  font-size:15px;
+  max-width:75ch;
+}
+.badgeRow{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.badge{
+  border:1px solid var(--border);
+  background:#f6f7f2;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  color:var(--muted);
+}
+.grid{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:16px;
+  align-items:start;
+}
+.grid.toc-collapsed{ grid-template-columns:1fr; }
+.toc{
+  position:sticky;
+  top:86px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:12px;
+  max-height:calc(100vh - 110px);
+  overflow:auto;
+}
+.toc h3{
+  margin:0 0 10px;
+  font-size:14px;
+  color:var(--muted);
+  letter-spacing:0.3px;
+  text-transform:uppercase;
+}
+.toc a{
+  display:block;
+  text-decoration:none;
+  color:var(--text);
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid transparent;
+  font-size:14px;
+}
+.toc a:hover{
+  background:#f6f7f2;
+  border-color:var(--border);
+}
+.toc a.active{
+  background:rgba(15,74,58,0.08);
+  border-color:rgba(15,74,58,0.18);
+  color:var(--brand);
+  font-weight:800;
+}
+.toc.hidden{ display:none; }
+
+.reader{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:var(--card);
+  padding:22px;
+  font-size:var(--bodySize);
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+.reader-controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.reader-controls button{
+  padding:8px 14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#f6f7f2;
+  font-weight:800;
+  cursor:pointer;
+}
+.reader-controls button:hover{ background:#eceee8; }
+
+.contents-toggle{
+  display:none;
+  padding:8px 12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#f6f7f2;
+  font-weight:800;
+  cursor:pointer;
+}
+.contents-toggle.show{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+.mobile-menu-btn{
+  display:none;
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#f6f7f2;
+  font-weight:800;
+  margin:8px 0 12px;
+  text-align:left;
+}
+.mobile-overlay{
+  position:fixed;
+  inset:0;
+  background:var(--bg);
+  z-index:9999;
+  display:none;
+  flex-direction:column;
+  padding:18px;
+  overflow-y:auto;
+}
+.mobile-overlay .top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.mobile-overlay h3{
+  margin:0;
+  font-size:18px;
+  color:var(--brand);
+  font-weight:900;
+}
+.mobile-overlay .close-btn{
+  font-weight:800;
+  border:1px solid var(--border);
+  padding:10px 14px;
+  border-radius:12px;
+  background:#f6f7f2;
+  cursor:pointer;
+}
+.mobile-overlay a{
+  display:block;
+  padding:12px 0;
+  text-decoration:none;
+  color:var(--text);
+  font-size:16px;
+  border-bottom:1px solid var(--border);
+}
+.mobile-overlay a.active{
+  color:var(--brand);
+  font-weight:900;
+}
+
+.section{ display:none; }
+
+.reader h2{
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--brand);
+  font-size:26px;
+  margin:12px 0 10px;
+  line-height:1.25;
+}
+.reader p{ margin:0 0 14px; }
+
+.section-nav{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:26px;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+}
+.section-nav button{
+  cursor:pointer;
+  font-weight:800;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#f6f7f2;
+  color:var(--brand);
+}
+.section-nav button.next{
+  border:0;
+  color:#fff;
+  background:linear-gradient(90deg,var(--brand),var(--brand2));
+}
+.section-nav button:disabled{
+  opacity:0.45;
+  cursor:not-allowed;
+}
+
+.footer-note{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:16px;
+}
+
+.coverpage{
+  text-align:center;
+  padding:10px 0 8px;
+}
+.coverpage .bookname{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:900;
+  font-size:34px;
+  color:var(--brand);
+  margin:8px 0 16px;
+}
+.coverpage img{
+  width:min(560px, 100%);
+  height:auto;
+  display:block;
+  margin:0 auto;
+  border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.hr-accent{
+  height:1px;
+  background:linear-gradient(90deg, rgba(15,74,58,0.35), rgba(177,138,43,0.35));
+  margin:18px 0 22px;
+}
+
+.loader{
+  border:1px solid var(--border);
+  background:#f6f7f2;
+  padding:12px 14px;
+  border-radius:14px;
+  color:var(--muted);
+  font-weight:700;
+}
+.errorBox{
+  border:1px solid rgba(192,0,0,0.25);
+  background:rgba(192,0,0,0.06);
+  padding:12px 14px;
+  border-radius:14px;
+}
+.chapterShell h2{
+  margin-top:0;
+}
+
+@media (max-width:980px){
+  .hero{ grid-template-columns:1fr; }
+  .grid{ grid-template-columns:1fr; }
+  .toc{ display:none; }
+  .mobile-menu-btn{ display:block; }
+  .contents-toggle{ display:none !important; }
+  .coverpage .bookname{ font-size:28px; }
+  .reader{ padding:16px; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="backLink" href="/e-books">Back to Library</a>
+  </div>
+  <div class="progress-rail">
+    <div class="progress"><div id="prog"></div></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="cover">
+      <img src="https://static.wixstatic.com/media/e1f65b_f66b698936204f92a96dec14031acc9c~mv2.png" alt="Ayurveda for Beginners cover">
+    </div>
+
+    <div class="heroCard">
+      <h1>Ayurveda for Beginners</h1>
+      <p>A structured beginner guide to Ayurveda. This reader includes the Cover plus Chapters 1 to 15.</p>
+      <div class="badgeRow">
+        <div class="badge">Read online only</div>
+        <div class="badge">Free access</div>
+        <div class="badge">Up to Chapter 15</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid" id="mainGrid">
+
+    <aside class="toc" id="tocPanel" aria-label="Table of contents">
+      <h3>Contents</h3>
+      <a href="javascript:void(0)" onclick="goToSection(0,true)" id="toc0">Cover</a>
+      <a href="javascript:void(0)" onclick="goToSection(1,true)" id="toc1">Chapter 1</a>
+      <a href="javascript:void(0)" onclick="goToSection(2,true)" id="toc2">Chapter 2</a>
+      <a href="javascript:void(0)" onclick="goToSection(3,true)" id="toc3">Chapter 3</a>
+      <a href="javascript:void(0)" onclick="goToSection(4,true)" id="toc4">Chapter 4</a>
+      <a href="javascript:void(0)" onclick="goToSection(5,true)" id="toc5">Chapter 5</a>
+      <a href="javascript:void(0)" onclick="goToSection(6,true)" id="toc6">Chapter 6</a>
+      <a href="javascript:void(0)" onclick="goToSection(7,true)" id="toc7">Chapter 7</a>
+      <a href="javascript:void(0)" onclick="goToSection(8,true)" id="toc8">Chapter 8</a>
+      <a href="javascript:void(0)" onclick="goToSection(9,true)" id="toc9">Chapter 9</a>
+      <a href="javascript:void(0)" onclick="goToSection(10,true)" id="toc10">Chapter 10</a>
+      <a href="javascript:void(0)" onclick="goToSection(11,true)" id="toc11">Chapter 11</a>
+      <a href="javascript:void(0)" onclick="goToSection(12,true)" id="toc12">Chapter 12</a>
+      <a href="javascript:void(0)" onclick="goToSection(13,true)" id="toc13">Chapter 13</a>
+      <a href="javascript:void(0)" onclick="goToSection(14,true)" id="toc14">Chapter 14</a>
+      <a href="javascript:void(0)" onclick="goToSection(15,true)" id="toc15">Chapter 15</a>
+    </aside>
+
+    <main class="reader" id="reader">
+
+      <div class="reader-controls">
+        <button type="button" onclick="fontDown()">A-</button>
+        <button type="button" onclick="fontUp()">A+</button>
+        <button type="button" onclick="toggleMode()">Mode</button>
+        <button type="button" class="contents-toggle" id="contentsToggle" onclick="openContents()">Contents</button>
+      </div>
+
+      <button class="mobile-menu-btn" type="button" onclick="openOverlay()">Contents</button>
+
+      <div class="mobile-overlay" id="mobileOverlay">
+        <div class="top">
+          <h3>Contents</h3>
+          <button class="close-btn" type="button" onclick="closeOverlay()">Close</button>
+        </div>
+        <a href="javascript:void(0)" onclick="selectSection(0)" id="m0">Cover</a>
+        <a href="javascript:void(0)" onclick="selectSection(1)" id="m1">Chapter 1</a>
+        <a href="javascript:void(0)" onclick="selectSection(2)" id="m2">Chapter 2</a>
+        <a href="javascript:void(0)" onclick="selectSection(3)" id="m3">Chapter 3</a>
+        <a href="javascript:void(0)" onclick="selectSection(4)" id="m4">Chapter 4</a>
+        <a href="javascript:void(0)" onclick="selectSection(5)" id="m5">Chapter 5</a>
+        <a href="javascript:void(0)" onclick="selectSection(6)" id="m6">Chapter 6</a>
+        <a href="javascript:void(0)" onclick="selectSection(7)" id="m7">Chapter 7</a>
+        <a href="javascript:void(0)" onclick="selectSection(8)" id="m8">Chapter 8</a>
+        <a href="javascript:void(0)" onclick="selectSection(9)" id="m9">Chapter 9</a>
+        <a href="javascript:void(0)" onclick="selectSection(10)" id="m10">Chapter 10</a>
+        <a href="javascript:void(0)" onclick="selectSection(11)" id="m11">Chapter 11</a>
+        <a href="javascript:void(0)" onclick="selectSection(12)" id="m12">Chapter 12</a>
+        <a href="javascript:void(0)" onclick="selectSection(13)" id="m13">Chapter 13</a>
+        <a href="javascript:void(0)" onclick="selectSection(14)" id="m14">Chapter 14</a>
+        <a href="javascript:void(0)" onclick="selectSection(15)" id="m15">Chapter 15</a>
+      </div>
+
+      <!-- COVER -->
+      <div class="section" id="sec0">
+        <div class="coverpage">
+          <div class="bookname">Ayurveda for Beginners</div>
+          <img
+            src="https://static.wixstatic.com/media/e1f65b_571d21dfedfb475da9cb97f2f8251960~mv2.jpeg"
+            alt="Ayurveda for Beginners cover page"
+          />
+        </div>
+
+        <div class="section-nav">
+          <button type="button" onclick="prevSection()" disabled>Previous</button>
+          <button type="button" class="next" onclick="nextSection()">Next</button>
+        </div>
+
+        <div class="footer-note">Copyright © Vande Wellness. Online reading only.</div>
+      </div>
+
+      <!-- CHAPTER VIEW (loads from GitHub /chapters/chapter-N.html) -->
+      <div class="section" id="secChapter">
+        <div class="chapterShell">
+          <h2 id="chapterTitle" style="margin-top:0;">Chapter</h2>
+          <div class="hr-accent"></div>
+
+          <div id="chapterContent">
+            <div class="loader">Loading chapter...</div>
+          </div>
+
+          <div class="section-nav">
+            <button type="button" id="prevBtn" onclick="prevSection()">Previous</button>
+            <button type="button" class="next" id="nextBtn" onclick="nextSection()">Next</button>
+          </div>
+
+          <div class="footer-note">Copyright © Vande Wellness. Online reading only.</div>
+        </div>
+      </div>
+
+    </main>
+  </section>
+
+</div>
+
+<script>
+let fontSize = 18;
+let dark = false;
+
+// 0 = cover, 1..15 = chapters
+let current = 0;
+const maxSection = 15;
+
+function applyFont(){
+  document.documentElement.style.setProperty("--bodySize", fontSize + "px");
+}
+function fontUp(){ fontSize = Math.min(26, fontSize + 1); applyFont(); }
+function fontDown(){ fontSize = Math.max(15, fontSize - 1); applyFont(); }
+
+function toggleMode(){
+  dark = !dark;
+  const root = document.documentElement;
+  if(dark){
+    root.style.setProperty("--bg", "#0f1411");
+    root.style.setProperty("--card", "#121a15");
+    root.style.setProperty("--text", "#eef3ee");
+    root.style.setProperty("--muted", "#b7c2b8");
+    root.style.setProperty("--border", "#243126");
+    root.style.setProperty("--rail", "#1b241d");
+  } else {
+    root.style.setProperty("--bg", "#fbfbf8");
+    root.style.setProperty("--card", "#ffffff");
+    root.style.setProperty("--text", "#142015");
+    root.style.setProperty("--muted", "#4b5a4d");
+    root.style.setProperty("--border", "#e6e6e0");
+    root.style.setProperty("--rail", "#e9ece6");
+  }
+}
+
+function updateProgress(){
+  const el = document.documentElement;
+  const top = el.scrollTop || document.body.scrollTop;
+  const height = el.scrollHeight - el.clientHeight;
+  const pct = height > 0 ? (top / height) * 100 : 0;
+  const bar = document.getElementById("prog");
+  if(bar) bar.style.width = pct.toFixed(2) + "%";
+}
+
+function collapseContents(){
+  const grid = document.getElementById("mainGrid");
+  const toc = document.getElementById("tocPanel");
+  const btn = document.getElementById("contentsToggle");
+  if(!grid || !toc || !btn) return;
+  grid.classList.add("toc-collapsed");
+  toc.classList.add("hidden");
+  btn.classList.add("show");
+}
+function openContents(){
+  const grid = document.getElementById("mainGrid");
+  const toc = document.getElementById("tocPanel");
+  const btn = document.getElementById("contentsToggle");
+  if(!grid || !toc || !btn) return;
+  grid.classList.remove("toc-collapsed");
+  toc.classList.remove("hidden");
+  btn.classList.remove("show");
+}
+
+function openOverlay(){
+  const overlay = document.getElementById("mobileOverlay");
+  if(overlay){
+    overlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+}
+function closeOverlay(){
+  const overlay = document.getElementById("mobileOverlay");
+  if(overlay){
+    overlay.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+}
+
+function setMobileActive(n){
+  for(let i=0;i<=maxSection;i++){
+    const m = document.getElementById("m"+i);
+    if(m) m.classList.remove("active");
+  }
+  const active = document.getElementById("m"+n);
+  if(active) active.classList.add("active");
+}
+
+function setTocActive(n){
+  for(let i=0;i<=maxSection;i++){
+    const toc = document.getElementById("toc"+i);
+    if(toc) toc.classList.remove("active");
+  }
+  const activeToc = document.getElementById("toc"+n);
+  if(activeToc) activeToc.classList.add("active");
+}
+
+async function loadChapter(n){
+  const title = document.getElementById("chapterTitle");
+  const holder = document.getElementById("chapterContent");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  if(title) title.textContent = "Chapter " + n;
+  if(holder) holder.innerHTML = '<div class="loader">Loading chapter...</div>';
+
+  if(prevBtn) prevBtn.disabled = (n === 0);
+  if(nextBtn) nextBtn.textContent = (n === maxSection) ? "Back to Top" : "Next";
+
+  try{
+    const res = await fetch("chapters/chapter-" + n + ".html", { cache: "no-store" });
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    const html = await res.text();
+    if(holder) holder.innerHTML = html;
+  } catch(err){
+    if(holder){
+      holder.innerHTML =
+        '<div class="errorBox">' +
+          '<b>Could not load chapter ' + n + '.</b><br>' +
+          'Check that this file exists: <code>chapters/chapter-' + n + '.html</code>' +
+        '</div>';
+    }
+  }
+}
+
+function showSection(n){
+  const cover = document.getElementById("sec0");
+  const chap = document.getElementById("secChapter");
+
+  if(cover) cover.style.display = "none";
+  if(chap) chap.style.display = "none";
+
+  setTocActive(n);
+  setMobileActive(n);
+
+  if(n === 0){
+    if(cover) cover.style.display = "block";
+  } else {
+    if(chap) chap.style.display = "block";
+    loadChapter(n);
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goToSection(n, collapse){
+  current = n;
+  showSection(n);
+  const isMobile = window.matchMedia("(max-width: 980px)").matches;
+  if(!isMobile && collapse) collapseContents();
+}
+function selectSection(n){
+  current = n;
+  showSection(n);
+  closeOverlay();
+}
+
+function nextSection(){
+  if(current === maxSection){
+    current = 0;
+    openContents();
+    showSection(0);
+    return;
+  }
+  if(current < maxSection){
+    current++;
+    showSection(current);
+  }
+}
+function prevSection(){
+  if(current > 0){
+    current--;
+    showSection(current);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  applyFont();
+  openContents();
+  showSection(0);
+  updateProgress();
+});
+window.addEventListener("scroll", updateProgress, { passive:true });
+</script>
+
+</body>
+</html>
